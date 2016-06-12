@@ -1,10 +1,10 @@
-Clyde - Session access provided for api customers.
+Coviu Session API
 =====================================
 
-Clyde provides a session based algebra for creating, and restricting access to coviu calls. The core metaphors used are
+Coviu provides a session based API for creating and restricting access to coviu calls. The core concepts exposed are
 
-Session: A coviu call that occurs between two or more parties at a specified time, and has a finite duration.
-Participants: Users who may participate in a coviu call.
+* Session: A coviu call that occurs between two or more parties at a specified time, and has a finite duration.
+* Participants: Users who may participate in a coviu call.
 
 Participants join a call by following a _session link_ in their browser, or mobile app. The _session link_
 identifies the participant, including their name, optional avatar, and importantly their _role_. As such,
@@ -34,9 +34,9 @@ to be issued a access and refresh tokens directly.
 
 Api users will have been issued an `api_key` and `key_secret` pair.
 
-#### Request access token with Resource Owner Credentials
+#### Request access token with Client Credentials
 
-https://tools.ietf.org/html/rfc6749#section-4.3
+https://tools.ietf.org/html/rfc6749#section-4.4
 
 ```
 POST /v1/auth/token
