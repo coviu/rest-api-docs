@@ -1,10 +1,10 @@
-Clyde - Session access provided for api customers.
+Coviu Session API - Session access provided for api customers.
 =====================================
 
-克莱德Clyde(COVIU API名字)提供了一个基于会话形式来创建，和限制进入COVIU通话。使用的典型情况如下：
+Coviu会话API提供了一个基于会话形式来创建，和限制进入COVIU通话。主要的核心概念如下：
 
-会话：是指COVIU通话在指定的时间双方或多方之间发生，并具有有时效性。
-参会者：要加入到COVIU通话的用户。
+* 会话：是指COVIU通话在指定的时间双方或多方之间发生，并具有有时效性。
+* 参会者：要加入到COVIU通话的用户。
 
 参会者在自己的浏览器或移动应用程序中的一个 _session link_ （绘画链接）加入通话。该 _session link_ 确认参会者，包括姓名，可选头像，以及重要的是他们 _role_ (用户角色）。因此，每一个加入COVIU通话的用户都会被分配一个不同的 _session link_ ，也就是说 _session link_ 被创建是根据 _participant_ 属性。每个参与者的角色属性 _role_ 标示着该用户连接的权限，直连或间接连接 _let in_ 。 _let in_ 模式是指新加入通话用户需要被准许。
 
@@ -21,9 +21,9 @@ new Date().toUTCString();
 
 COVIU使用OAuth2 rfc6749机制来认证和授权API客户端。基本的方法是按照OAuth2的授权流程来分配访问令牌和承载令牌。承载令牌用于访问用户资源。API客户端会被分配一个`api_key`和一个`key_secret`。API客户端使用这对密匙依据OAuth2 `client_credentials`流程来访问和更新令牌信息。
 
-#### Request access token with Resource Owner Credentials资源所有者请求访问令牌
+#### Request access token with Client Credentials 使用客户端凭证请求访问令牌
 
-https://tools.ietf.org/html/rfc6749#section-4.3
+https://tools.ietf.org/html/rfc6749#section-4.4
 
 ```
 POST /v1/auth/token
