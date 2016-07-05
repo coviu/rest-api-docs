@@ -389,14 +389,15 @@ Get a list of sessions, filtering by start and end time, page by page.
 page=[Integer] - Optional, zero baseed indexex
 page_size=[Integer] - Optional, number of entries to return
 start_time=[date string] - Optional, include sessions whose start time fall after start_time, url encoded.
-end_time=[date string] - Optional, include sessions whos end time falls before end_time, url_encoded.
+end_time=[date string] - Optional, include sessions whose end time falls before end_time, url_encoded.
+include_canceled=[Boolean] - Optional, include sessions that have been canceled
 ```
 
 #### Example
 ```
 /sessions
 
-/sessions?page=1&page_size=100&start_time=Wed%2C%2008%20Jun%202016%2004%3A24%3A29%20GMT&end_time=Wed%2C%2008%20Jun%202016%2004%3A44%3A29%20GMT
+/sessions?page=1&page_size=100&start_time=Wed%2C%2008%20Jun%202016%2004%3A24%3A29%20GMT&end_time=Wed%2C%2008%20Jun%202016%2004%3A44%3A29%20GMT&include_canceled=false
 ```
 ### Response
 ```
