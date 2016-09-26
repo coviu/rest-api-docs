@@ -155,7 +155,8 @@ Body:
       "picture": [option url for participant avatar],
       "role": [*required* - "guest", or "host"],
       "session_id": [server defined session id],
-      "state": [option content for client use, e.g. local user id of client]
+      "state": [option content for client use, e.g. local user id of client],
+      "deleted_at": [optional timestamp indicating when the participant was removed from the session.]
     }...]
 }
 ```
@@ -212,6 +213,12 @@ Get a single session by id.
 
 `Authorization: Bearer <access_token>`
 
+#### URL Parameters
+
+```
+deleted_participants=[Boolean] - Optional, include participants that have been removed from the session.
+```
+
 ### Response
 ```
 Status:  200 Ok
@@ -234,7 +241,8 @@ Body:
       "picture": [option url for participant avatar],
       "role": [*required* - "guest", or "host"],
       "session_id": [server defined session id],
-      "state": [option content for client use, e.g. local user id of client]
+      "state": [option content for client use, e.g. local user id of client],
+      "deleted_at": [optional timestamp indicating when the participant was removed from the session.]
     }...]
 }
 ```
@@ -337,7 +345,8 @@ Body:
       "picture": [option url for participant avatar],
       "role": [*required* - "guest", or "host"],
       "session_id": [server defined session id],
-      "state": [option content for client use, e.g. local user id of client]
+      "state": [option content for client use, e.g. local user id of client],
+      "deleted_at": [optional timestamp indicating when the participant was removed from the session.]
     }...]
 }
 ```
@@ -391,6 +400,8 @@ page_size=[Integer] - Optional, number of entries to return
 start_time=[date string] - Optional, include sessions whose start time fall after start_time, url encoded.
 end_time=[date string] - Optional, include sessions whose end time falls before end_time, url_encoded.
 include_canceled=[Boolean] - Optional, include sessions that have been canceled
+deleted_participants=[Boolean] - Optional, include participants that have been removed from the session.
+state=[String] - Optional, limit the response to sessions with participants with a specific state value set.
 ```
 
 #### Example
@@ -547,7 +558,8 @@ Body:
   "picture": [option url for participant avatar],
   "role": [*required* - "guest", or "host"],
   "session_id": [server defined session id],
-  "state": [option content for client use, e.g. local user id of client]
+  "state": [option content for client use, e.g. local user id of client],
+  "deleted_at": [optional timestamp indicating when the participant was removed from the session.]
 }
 ```
 #### Example Response
@@ -581,6 +593,11 @@ Get the list of participants for a session.
 
 `Authorization: Bearer <access_token>`
 
+#### URL Parameters
+
+```
+deleted_participants=[Boolean] - Optional, include participants that have been removed from the session.
+```
 ### Response
 ```
 Status:  200 Ok
@@ -594,7 +611,8 @@ Body:
   "picture": [option url for participant avatar],
   "role": [*required* - "guest", or "host"],
   "session_id": [server defined session id],
-  "state": [option content for client use, e.g. local user id of client]
+  "state": [option content for client use, e.g. local user id of client],
+  "deleted_at": [optional timestamp indicating when the participant was removed from the session.]
 },...]
 ```
 
@@ -627,7 +645,8 @@ Body:
   "picture": [option url for participant avatar],
   "role": [*required* - "guest", or "host"],
   "session_id": [server defined session id],
-  "state": [option content for client use, e.g. local user id of client]
+  "state": [option content for client use, e.g. local user id of client],
+  "deleted_at": [optional timestamp indicating when the participant was removed from the session.]
 }
 ```
 
@@ -700,7 +719,8 @@ Body:
   "picture": [option url for participant avatar],
   "role": [*required* - "guest", or "host"],
   "session_id": [server defined session id],
-  "state": [option content for client use, e.g. local user id of client]
+  "state": [option content for client use, e.g. local user id of client],
+  "deleted_at": [optional timestamp indicating when the participant was removed from the session.]
 }
 ```
 #### Example Response
