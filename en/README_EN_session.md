@@ -380,9 +380,9 @@ Body:
 
 Get a list of sessions.
 
-By default, the returned order is paginated with the first page containing the most recently created sessions. If you set the "order" parameter to "forward", the oldest created sessions will be returned.
+By default, the returned order is paginated with the first page containing the created sessions in chronological order (oldest created first). If you set the "order" parameter to "reverse", the newest created sessions will be returned.
 
-You can filter sessions by start and end time, at which stage the returned result list is ordered by start time in chronological order. The "order" parameter allows you to reverse this order to retrieve sessions by start time with the newest start time first.
+You can filter sessions by start and end time, at which stage the returned result list is ordered by start time in chronological order (rather than by creation time). The "order" parameter allows you to reverse this order to retrieve sessions by start time with the newest start time first.
 
 #### Method
 
@@ -403,7 +403,7 @@ page=[Integer] - Optional, zero based index.
 page_size=[Integer] - Optional, number of entries to return.
 start_time=[date string] - Optional, include sessions whose start time fall after start_time, url encoded.
 end_time=[date string] - Optional, include sessions whose end time falls before end_time, url_encoded.
-order=['forward'/'backward'] - Optional, order returned sessions chronologically forward or backward, either by creation date (default), or by start time (when used in conjunction with the start_time or end_time parameters).
+order=['forward'/'reverse'] - Optional, order returned sessions chronologically forward or reverse, either by creation date (default), or by start time (when used in conjunction with the start_time or end_time parameters).
 include_canceled=[Boolean] - Optional, include sessions that have been canceled.
 deleted_participants=[Boolean] - Optional, include participants that have been removed from the session.
 state=[String] - Optional, limit the response to sessions with participants with a specific state value set.
