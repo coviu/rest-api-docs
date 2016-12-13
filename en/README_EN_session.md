@@ -53,6 +53,25 @@ Response: 200, application/json;UTF-8
 }
 ```
 
+#### Request access token with Authorization Code
+
+https://tools.ietf.org/html/rfc6749#section-4.1
+
+```
+POST /v1/auth/token
+Authorization: Basic Base64(api_key:key_secret)
+Body: grant_type=authorization_code&code=<authorization_code>
+
+Response: 200, application/json;UTF-8
+{
+  access_token: <A bearer token used for authenticating api requests>,
+  refresh_token: <A refresh token that may be used to recover a new access token>,
+  expires_in: <seconds until it expires>,
+  token_type: "Bearer",
+  scope: <issued scope associated with client>
+}
+```
+
 ### Refresh an access token
 
 https://tools.ietf.org/html/rfc6749#section-6
