@@ -14,7 +14,7 @@ or if they are required the be _let in_ by an existing participant.
 
 ## Open API Specification
 
-There's an open api (formerly swagger) specification for this api [**here**](../session-api-swagger.json)
+There's an open api (formerly swagger) specification for this api [**here**](../sessions-api-swagger.json)
 
 ##  API
 
