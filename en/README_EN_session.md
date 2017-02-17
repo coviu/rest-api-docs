@@ -12,6 +12,9 @@ it is important that each person joining the call be issued a different _session
 _participant_ created for them. A participant's _role_ identifies whether that user may access the call directly,
 or if they are required the be _let in_ by an existing participant.
 
+## Open API Specification
+
+There's an open api (formerly swagger) specification for this api [**here**](session-api-swagger.json)
 
 ##  API
 

@@ -1,0 +1,737 @@
+{
+    "swagger": "2.0",
+    "securityDefinitions": {
+        "oauth2": {
+            "flow": "application",
+            "tokenUrl": "https://api.coviu.com/v1/auth/token",
+            "type": "oauth2"
+        }
+    },
+    "host": "api.coviu.com/v1",
+    "info": {
+        "version": "1.0",
+        "title": "Coviu Session API",
+        "license": {
+            "name": "MIT"
+        },
+        "description": "Coviu provides a session based API for creating and restricting access to coviu calls. The core concepts exposed are* Session: A coviu call that occurs between two or more parties at a specified time, and has a finite duration.* Participants: Users who may participate in a coviu call.Participants join a call by following a session link in their browser, or mobile app. The session link identifiesthe participant, including their name, optional avatar, and importantly their role. As such, it is important thateach person joining the call be issued a different session link, i.e. have a distinct participant created for them. A participant's role identifies whether that user may access the call directly, or if they are required the be let inby an existing participant."
+    },
+    "definitions": {
+        "ParticipantCreationRequest": {
+            "type": "object",
+            "properties": {
+                "state": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                }
+            }
+        },
+        "UnitResponse": {
+            "required": [
+                "ok"
+            ],
+            "type": "object",
+            "properties": {
+                "ok": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "SessionPage": {
+            "required": [
+                "content",
+                "more"
+            ],
+            "type": "object",
+            "properties": {
+                "page_count": {
+                    "maximum": 9223372036854775807,
+                    "minimum": -9223372036854775808,
+                    "type": "integer"
+                },
+                "more": {
+                    "type": "boolean"
+                },
+                "page": {
+                    "maximum": 9223372036854775807,
+                    "minimum": -9223372036854775808,
+                    "type": "integer"
+                },
+                "page_size": {
+                    "maximum": 9223372036854775807,
+                    "minimum": -9223372036854775808,
+                    "type": "integer"
+                },
+                "content": {
+                    "items": {
+                        "$ref": "#/definitions/Session"
+                    },
+                    "type": "array"
+                }
+            }
+        },
+        "SessionUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "picture": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "$ref": "#/definitions/DateTime"
+                },
+                "end_time": {
+                    "$ref": "#/definitions/DateTime"
+                },
+                "session_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "ParticipantPage": {
+            "required": [
+                "content",
+                "more"
+            ],
+            "type": "object",
+            "properties": {
+                "page_count": {
+                    "maximum": 9223372036854775807,
+                    "minimum": -9223372036854775808,
+                    "type": "integer"
+                },
+                "more": {
+                    "type": "boolean"
+                },
+                "page": {
+                    "maximum": 9223372036854775807,
+                    "minimum": -9223372036854775808,
+                    "type": "integer"
+                },
+                "page_size": {
+                    "maximum": 9223372036854775807,
+                    "minimum": -9223372036854775808,
+                    "type": "integer"
+                },
+                "content": {
+                    "items": {
+                        "$ref": "#/definitions/Participant"
+                    },
+                    "type": "array"
+                }
+            }
+        },
+        "ParticipantUpdateRequest": {
+            "type": "object",
+            "properties": {
+                "state": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                }
+            }
+        },
+        "Participant": {
+            "type": "object",
+            "properties": {
+                "session_id": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "participant_id": {
+                    "type": "string"
+                },
+                "client_id": {
+                    "type": "string"
+                },
+                "role": {
+                    "type": "string"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "coviu_user_id": {
+                    "type": "string"
+                },
+                "entry_url": {
+                    "type": "string"
+                }
+            }
+        },
+        "Session": {
+            "required": [
+                "start_time",
+                "end_time"
+            ],
+            "type": "object",
+            "properties": {
+                "feature_flags": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "session_id": {
+                    "type": "string"
+                },
+                "team_id": {
+                    "type": "string"
+                },
+                "client_id": {
+                    "type": "string"
+                },
+                "participants": {
+                    "items": {
+                        "$ref": "#/definitions/Participant"
+                    },
+                    "type": "array"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "$ref": "#/definitions/DateTime"
+                },
+                "end_time": {
+                    "$ref": "#/definitions/DateTime"
+                },
+                "canceled_time": {
+                    "type": "string"
+                },
+                "session_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "SessionCreationRequest": {
+            "required": [
+                "start_time",
+                "end_time"
+            ],
+            "type": "object",
+            "properties": {
+                "feature_flags": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "participants": {
+                    "items": {
+                        "$ref": "#/definitions/ParticipantCreationRequest"
+                    },
+                    "type": "array"
+                },
+                "picture": {
+                    "type": "string"
+                },
+                "start_time": {
+                    "$ref": "#/definitions/DateTime"
+                },
+                "end_time": {
+                    "$ref": "#/definitions/DateTime"
+                },
+                "session_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "DateTime": {
+            "format": "date-time",
+            "type": "string"
+        }
+    },
+    "paths": {
+        "/participants/{participant_id}": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "`participant_id` not found"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Participant"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "participant_id",
+                        "type": "string",
+                        "description": "The participant id of the participant that the operation applies to."
+                    }
+                ],
+                "operationId": "getSessionParticipant",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "Get a single participant by its id.",
+                "tags": [
+                    "Session"
+                ]
+            },
+            "delete": {
+                "responses": {
+                    "404": {
+                        "description": "`participant_id` not found"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/UnitResponse"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "participant_id",
+                        "type": "string",
+                        "description": "The participant id of the participant that the operation applies to."
+                    }
+                ],
+                "operationId": "deleteSessionParticipant",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "Cancel a session participant. The participant will no longer be able to enter the session. Once a participant has been canceled, it may not be uncanceled. A participant may not be canceled after a session has finished.",
+                "tags": [
+                    "Session"
+                ]
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "responses": {
+                    "404": {
+                        "description": "`participant_id` not found"
+                    },
+                    "400": {
+                        "description": "Invalid `body`"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Participant"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "participant_id",
+                        "type": "string",
+                        "description": "The participant id of the participant that the operation applies to."
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ParticipantUpdateRequest"
+                        },
+                        "in": "body",
+                        "name": "body"
+                    }
+                ],
+                "operationId": "updateSessionParticipant",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "It is possible to update a participant's name, role, picture, and state after it has been created.",
+                "tags": [
+                    "Session"
+                ]
+            }
+        },
+        "/sessions/{session_id}": {
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "`session_id` not found"
+                    },
+                    "400": {
+                        "description": "Invalid `deleted_participants`"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Session"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "session_id",
+                        "type": "string",
+                        "description": "The session id of the session that the operation applies to."
+                    },
+                    {
+                        "in": "query",
+                        "name": "deleted_participants",
+                        "type": "boolean",
+                        "description": "Also include participants that have been removed from the session."
+                    }
+                ],
+                "operationId": "getSessionById",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "Get a single session by id.",
+                "tags": [
+                    "Session"
+                ]
+            },
+            "delete": {
+                "responses": {
+                    "404": {
+                        "description": "`session_id` not found"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/UnitResponse"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "session_id",
+                        "type": "string",
+                        "description": "The session id of the session that the operation applies to."
+                    }
+                ],
+                "operationId": "deleteSession",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "A session that is scheduled for the future may be canceled. No participants will be able to join the session after it has been canceled, and it can not be uncanceled once it has been canceled. A session that has already started may not be canceled.",
+                "tags": [
+                    "Session"
+                ]
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "responses": {
+                    "404": {
+                        "description": "`session_id` not found"
+                    },
+                    "400": {
+                        "description": "Invalid `body`"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Session"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "session_id",
+                        "type": "string",
+                        "description": "The session id of the session that the operation applies to."
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SessionUpdateRequest"
+                        },
+                        "in": "body",
+                        "name": "body"
+                    }
+                ],
+                "operationId": "updateSession",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "It is possible to update some attributes of a session, namely the start and end time, session name and image. A session that has already finished may not be changed.",
+                "tags": [
+                    "Session"
+                ]
+            }
+        },
+        "/sessions": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid `body`"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Session"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SessionCreationRequest"
+                        },
+                        "in": "body",
+                        "name": "body"
+                    }
+                ],
+                "operationId": "createSession",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "Create a new session. Note that the session start time must be in the future, and the session end time must be after the session start time.",
+                "tags": [
+                    "Session"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "400": {
+                        "description": "Invalid `order` or `state` or `deleted_participants` or `include_canceled` or `end_time` or `start_time` or `page_size` or `page`"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/SessionPage"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "maximum": 9223372036854775807,
+                        "minimum": -9223372036854775808,
+                        "in": "query",
+                        "name": "page",
+                        "type": "integer",
+                        "description": "The page number to return"
+                    },
+                    {
+                        "maximum": 9223372036854775807,
+                        "minimum": -9223372036854775808,
+                        "in": "query",
+                        "name": "page_size",
+                        "type": "integer",
+                        "description": "The number of sessions per page. Max 200. Default 200."
+                    },
+                    {
+                        "format": "date-time",
+                        "in": "query",
+                        "name": "start_time",
+                        "type": "string",
+                        "description": "Includes sessions that start at or after start_time."
+                    },
+                    {
+                        "format": "date-time",
+                        "in": "query",
+                        "name": "end_time",
+                        "type": "string",
+                        "description": "Include sessions that start upto and including end_time.."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_canceled",
+                        "type": "boolean",
+                        "description": "Includes sessions that have been canceled."
+                    },
+                    {
+                        "in": "query",
+                        "name": "deleted_participants",
+                        "type": "boolean",
+                        "description": "Also include participants that have been removed from the session."
+                    },
+                    {
+                        "in": "query",
+                        "name": "state",
+                        "type": "string",
+                        "description": "Return only sessions containing participants with the supplied state value."
+                    },
+                    {
+                        "in": "query",
+                        "name": "order",
+                        "type": "string",
+                        "description": "Order the results. forward returns oldest first by start time. backwards includes newest first by startime."
+                    }
+                ],
+                "operationId": "getSessionPage",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "Get a list of sessions. By default, the returned order is \npaginated with the first page containing the created sessions \nin chronological order (oldest created first). If you set the \n \"order\" parameter to \"reverse\", the newest created sessions \nwill be returned. You can filter sessions by start and end time, \nat which stage the returned result list is ordered by start time \nin chronological order (rather than by creation time). The \"order\" \nparameter allows you to reverse this order to retrieve sessions by \nstart time with the newest start time first.",
+                "tags": [
+                    "Session"
+                ]
+            }
+        },
+        "/sessions/{session_id}/participants": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "responses": {
+                    "404": {
+                        "description": "`session_id` not found"
+                    },
+                    "400": {
+                        "description": "Invalid `body`"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/Participant"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "session_id",
+                        "type": "string",
+                        "description": "The session id of the session that the operation applies to."
+                    },
+                    {
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ParticipantCreationRequest"
+                        },
+                        "in": "body",
+                        "name": "body"
+                    }
+                ],
+                "operationId": "addSessionParticipant",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "It is sometimes useful to add a participant to a session after the session has been created. It is possible to add a participant to a session that has already start, but not to a session that has already finished.",
+                "tags": [
+                    "Session"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "404": {
+                        "description": "`session_id` not found"
+                    },
+                    "400": {
+                        "description": "Invalid `deleted_participants`"
+                    },
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/ParticipantPage"
+                        },
+                        "description": ""
+                    }
+                },
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "session_id",
+                        "type": "string",
+                        "description": "The session id of the session that the operation applies to."
+                    },
+                    {
+                        "in": "query",
+                        "name": "deleted_participants",
+                        "type": "boolean",
+                        "description": "Also include participants that have been removed from the session."
+                    }
+                ],
+                "operationId": "getSessionParticipants",
+                "security": [
+                    {
+                        "oauth2": []
+                    }
+                ],
+                "description": "Get the list of participants for a session.",
+                "tags": [
+                    "Session"
+                ]
+            }
+        }
+    }
+}
